@@ -1,0 +1,361 @@
+{
+  "kpi": {
+    "total_customers": 500,
+    "active": 413,
+    "due": 380,
+    "renewed": 293,
+    "churned": 87,
+    "pending": 120,
+    "renewal_rate": 77.1,
+    "avg_health": 71.8,
+    "tier_healthy": 155,
+    "tier_watch": 202,
+    "tier_risk": 56,
+    "warning_red": 19,
+    "warning_orange": 22,
+    "warning_yellow": 22,
+    "arr_at_risk": 347760
+  },
+  "renewal_trend": [
+    {
+      "month": "2025-03",
+      "due": 61,
+      "renewed": 40,
+      "rate": 65.6
+    },
+    {
+      "month": "2025-04",
+      "due": 65,
+      "renewed": 47,
+      "rate": 72.3
+    },
+    {
+      "month": "2025-05",
+      "due": 66,
+      "renewed": 55,
+      "rate": 83.3
+    },
+    {
+      "month": "2025-06",
+      "due": 57,
+      "renewed": 44,
+      "rate": 77.2
+    },
+    {
+      "month": "2025-07",
+      "due": 64,
+      "renewed": 50,
+      "rate": 78.1
+    },
+    {
+      "month": "2025-08",
+      "due": 67,
+      "renewed": 57,
+      "rate": 85.1
+    }
+  ],
+  "health_trend": [
+    {
+      "month": "2024-09",
+      "health": 73.3
+    },
+    {
+      "month": "2024-10",
+      "health": 73.4
+    },
+    {
+      "month": "2024-11",
+      "health": 73.7
+    },
+    {
+      "month": "2024-12",
+      "health": 73.9
+    },
+    {
+      "month": "2025-01",
+      "health": 73.8
+    },
+    {
+      "month": "2025-02",
+      "health": 72.5
+    },
+    {
+      "month": "2025-03",
+      "health": 71.3
+    },
+    {
+      "month": "2025-04",
+      "health": 70.7
+    },
+    {
+      "month": "2025-05",
+      "health": 71.0
+    },
+    {
+      "month": "2025-06",
+      "health": 70.6
+    },
+    {
+      "month": "2025-07",
+      "health": 70.5
+    },
+    {
+      "month": "2025-08",
+      "health": 70.9
+    }
+  ],
+  "industry": [
+    {
+      "industry": "服饰鞋包",
+      "total": 104,
+      "healthy": 37,
+      "watch": 53,
+      "risk": 14,
+      "avg_health": 71.8
+    },
+    {
+      "industry": "3C电子",
+      "total": 78,
+      "healthy": 33,
+      "watch": 35,
+      "risk": 10,
+      "avg_health": 72.8
+    },
+    {
+      "industry": "家居园艺",
+      "total": 55,
+      "healthy": 20,
+      "watch": 25,
+      "risk": 10,
+      "avg_health": 69.2
+    },
+    {
+      "industry": "户外运动",
+      "total": 46,
+      "healthy": 20,
+      "watch": 18,
+      "risk": 8,
+      "avg_health": 70.7
+    },
+    {
+      "industry": "美妆个护",
+      "total": 43,
+      "healthy": 12,
+      "watch": 26,
+      "risk": 5,
+      "avg_health": 72.4
+    },
+    {
+      "industry": "工业品",
+      "total": 23,
+      "healthy": 11,
+      "watch": 8,
+      "risk": 4,
+      "avg_health": 70.8
+    },
+    {
+      "industry": "母婴玩具",
+      "total": 34,
+      "healthy": 11,
+      "watch": 20,
+      "risk": 3,
+      "avg_health": 72.0
+    },
+    {
+      "industry": "汽摩配件",
+      "total": 30,
+      "healthy": 11,
+      "watch": 17,
+      "risk": 2,
+      "avg_health": 75.8
+    }
+  ],
+  "weights": {
+    "usage": 0.4,
+    "login_trend": 0.25,
+    "ticket_trend": 0.25,
+    "csat": 0.1
+  },
+  "top_warnings": [
+    {
+      "rank": 1,
+      "customer_id": "C0406",
+      "industry": "3C电子",
+      "plan": "基础版",
+      "health": 11.6,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 86%/89%（65→9→1次），健康度11.6",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 2,
+      "customer_id": "C0046",
+      "industry": "3C电子",
+      "plan": "基础版",
+      "health": 11.7,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 86%/89%（64→9→1次），健康度11.7",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；立即生成《客户价值回顾报告》并预约续约沟通；销售+CSM联合续约拜访，提前处理异议；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 3,
+      "customer_id": "C0415",
+      "industry": "服饰鞋包",
+      "plan": "基础版",
+      "health": 11.8,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 83%/89%（54→9→1次），健康度11.8",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 4,
+      "customer_id": "C0101",
+      "industry": "户外运动",
+      "plan": "旗舰版",
+      "health": 11.9,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 85%/92%（88→13→1次），健康度11.9",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；立即生成《客户价值回顾报告》并预约续约沟通；销售+CSM联合续约拜访，提前处理异议；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 5,
+      "customer_id": "C0143",
+      "industry": "户外运动",
+      "plan": "专业版",
+      "health": 12.1,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 84%/100%（32→5→0次），健康度12.1",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 6,
+      "customer_id": "C0150",
+      "industry": "服饰鞋包",
+      "plan": "基础版",
+      "health": 12.8,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 86%/90%（70→10→1次），健康度12.8",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；立即生成《客户价值回顾报告》并预约续约沟通；销售+CSM联合续约拜访，提前处理异议；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 7,
+      "customer_id": "C0135",
+      "industry": "母婴玩具",
+      "plan": "基础版",
+      "health": 14.6,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 56%/36%（32→14→9次），健康度14.6",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 8,
+      "customer_id": "C0480",
+      "industry": "家居园艺",
+      "plan": "专业版",
+      "health": 20.7,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 87%/100%（30→4→0次），健康度20.7",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 9,
+      "customer_id": "C0446",
+      "industry": "户外运动",
+      "plan": "基础版",
+      "health": 21.4,
+      "tier": "高风险",
+      "top_rule": "R2",
+      "severity": "高",
+      "evidence": "近2月工单较前2月增长 100%（1.0→2.0张/月），平均解决71h，CSAT 2.6",
+      "actions": "技术支持专家48小时内介入排查根因；开通应急通道（响应SLA提升至4小时）；立即生成《客户价值回顾报告》并预约续约沟通；销售+CSM联合续约拜访，提前处理异议；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 10,
+      "customer_id": "C0275",
+      "industry": "服饰鞋包",
+      "plan": "专业版",
+      "health": 22.2,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 57%/56%（324→140→62次），健康度22.2",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因"
+    },
+    {
+      "rank": 11,
+      "customer_id": "C0482",
+      "industry": "户外运动",
+      "plan": "基础版",
+      "health": 22.6,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 58%/54%（128→54→25次），健康度22.6",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因"
+    },
+    {
+      "rank": 12,
+      "customer_id": "C0245",
+      "industry": "服饰鞋包",
+      "plan": "专业版",
+      "health": 23.7,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 65%/53%（226→79→37次），健康度23.7",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；立即生成《客户价值回顾报告》并预约续约沟通；销售+CSM联合续约拜访，提前处理异议"
+    },
+    {
+      "rank": 13,
+      "customer_id": "C0166",
+      "industry": "工业品",
+      "plan": "专业版",
+      "health": 26.5,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 56%/67%（55→24→8次），健康度26.5",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因；立即生成《客户价值回顾报告》并预约续约沟通；销售+CSM联合续约拜访，提前处理异议；下发30天激活任务（每周2个核心功能）；报名直播培训并布置课后实操任务"
+    },
+    {
+      "rank": 14,
+      "customer_id": "C0153",
+      "industry": "服饰鞋包",
+      "plan": "基础版",
+      "health": 29.8,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 62%/67%（127→48→16次），健康度29.8",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因"
+    },
+    {
+      "rank": 15,
+      "customer_id": "C0382",
+      "industry": "家居园艺",
+      "plan": "基础版",
+      "health": 33.3,
+      "tier": "高风险",
+      "top_rule": "R1",
+      "severity": "高",
+      "evidence": "登录连续两月环比下降 58%/50%（91→38→19次），健康度33.3",
+      "actions": "48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因"
+    }
+  ]
+}

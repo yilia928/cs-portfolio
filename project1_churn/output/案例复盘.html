@@ -1,0 +1,475 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>案例复盘</title><style>
+:root{--brand:#2e5bff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--bg:#f6f8fc}
+*{box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC","Source Han Sans SC",sans-serif;color:var(--ink);
+ line-height:1.75;margin:0;background:var(--bg);font-size:14px}
+.page{max-width:880px;margin:0 auto;padding:48px 56px;background:#fff;min-height:100vh}
+h1{font-size:27px;color:var(--brand);border-bottom:3px solid var(--brand);padding-bottom:14px;margin:0 0 6px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:11px;border-left:5px solid var(--brand);color:#1e3a8a}
+h3{font-size:16px;margin:22px 0 8px;color:#374151}
+p{margin:9px 0}
+blockquote{margin:14px 0;padding:10px 16px;background:#eef3ff;border-left:4px solid var(--brand);
+ color:#374151;font-size:13px;border-radius:0 6px 6px 0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:12.8px}
+th{background:var(--brand);color:#fff;padding:8px 10px;text-align:left;font-weight:600}
+td{border:1px solid var(--line);padding:7px 10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:12.5px;color:#b5179e}
+pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.6}
+pre code{background:none;color:inherit;padding:0}
+ul,ol{padding-left:24px} li{margin:5px 0}
+hr{border:none;border-top:1px dashed #cbd5e1;margin:26px 0}
+strong{color:#111827}
+a{color:var(--brand)}
+@page{size:A4;margin:16mm 14mm}
+@media print{
+ body{background:#fff;font-size:12px}
+ .page{max-width:none;padding:0}
+ h2{page-break-after:avoid} table,blockquote,pre{page-break-inside:avoid}
+ h2,h3{page-break-after:avoid}
+}
+</style></head>
+<body><div class="page"><h1>典型客户案例复盘：信号 → 预警 → 干预 → 结局</h1>
+<blockquote>
+<p>三个案例覆盖三种典型处境：<strong>成功挽回（R1）、体验救火稳住续约（R2）、漏警流失反推规则迭代（R5）</strong>。<br />
+客户为脱敏编号，数据取自 <code>monthly_usage.csv</code> 与 <code>health_history.csv</code>，健康度曲线见看板底部。</p>
+</blockquote>
+<hr />
+<h2>案例① C0007｜登录骤降型流失危机，48 小时高层介入后挽回并增购</h2>
+<table>
+<thead>
+<tr>
+<th>档案</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>客户</td>
+<td>C0007，美妆个护，小微卖家，专业版 13 席位，ARR ¥2,860，2023-10 签约，合同 2025-07-28 到期</td>
+</tr>
+<tr>
+<td>客户经理</td>
+<td>陈璐</td>
+</tr>
+<tr>
+<td>结局</td>
+<td><strong>已续约，并增购 5 席位（ARR 增至约 ¥3,960/年）</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>信号时间线（2025 年）</strong></p>
+<table>
+<thead>
+<tr>
+<th>月份</th>
+<th>登录次数</th>
+<th>活跃席位</th>
+<th>工单</th>
+<th>CSAT</th>
+<th>使用模块</th>
+<th>健康度</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 月</td>
+<td>102</td>
+<td>10</td>
+<td>1</td>
+<td>4.5</td>
+<td>8</td>
+<td>79.5</td>
+<td>表面平稳</td>
+</tr>
+<tr>
+<td>2 月</td>
+<td>31 ↓</td>
+<td>5</td>
+<td>2</td>
+<td>3.6</td>
+<td>5</td>
+<td><strong>55.1</strong></td>
+<td>登录单月 -70%，进入高风险</td>
+</tr>
+<tr>
+<td>3 月</td>
+<td>20 ↓</td>
+<td>4</td>
+<td>4</td>
+<td>2.8</td>
+<td>4</td>
+<td><strong>42.1</strong></td>
+<td><strong>R1 红色预警：102→31→20，连续两月 -70%/-35%</strong></td>
+</tr>
+<tr>
+<td>4 月</td>
+<td>31</td>
+<td>5</td>
+<td>2</td>
+<td>3.4</td>
+<td>4</td>
+<td>39.1</td>
+<td>R3 黄色预警（席位利用率 31%~38%），健康度触底</td>
+</tr>
+<tr>
+<td>5 月</td>
+<td>71 ↑</td>
+<td>7</td>
+<td>0</td>
+<td>—</td>
+<td>8</td>
+<td>56.1</td>
+<td>干预见效，模块使用恢复</td>
+</tr>
+<tr>
+<td>6 月</td>
+<td>92</td>
+<td>9</td>
+<td>0</td>
+<td>—</td>
+<td>7</td>
+<td>76.4</td>
+<td>回到关注层</td>
+</tr>
+<tr>
+<td>7 月</td>
+<td>102</td>
+<td>10</td>
+<td>0</td>
+<td>—</td>
+<td>7</td>
+<td>79.9</td>
+<td><strong>7-28 按期续约 + 增购 5 席位</strong></td>
+</tr>
+<tr>
+<td>8 月</td>
+<td>112</td>
+<td>11</td>
+<td>1</td>
+<td>4.2</td>
+<td>8</td>
+<td><strong>83.0</strong></td>
+<td>进入健康层</td>
+</tr>
+</tbody>
+</table>
+<p><strong>预警与干预过程</strong></p>
+<ol>
+<li><strong>3 月 1 日批次预警</strong>自动推送 R1 红色工单（带证据：登录 102→31→20、健康度 42.1）；</li>
+<li>陈璐 24h 内电话诊断，根因：<strong>客户唯一的运营骨干 2 月离职，新接手运营不会用，老板对"系统还有没有用"产生动摇</strong>；</li>
+<li>48h 内客户成功总监与老板电话回访（高管对高管），承诺 30 天陪跑；</li>
+<li>为新运营安排 2 场 1v1 培训 + 下发 30 天激活任务（订单同步→发货回传→库存管理周任务）；</li>
+<li>5 月起周度复测健康度，6 月回到 76.4，7 月携《价值回顾报告》谈续约，以"旺季加人手"为切入点促成 5 席位增购。</li>
+</ol>
+<p><strong>复盘要点</strong></p>
+<ul>
+<li>登录骤降是<strong>人员变动的代理信号</strong>——B 端小微客户"一个人走、系统停"是典型剧本，预警规则不问原因但让 CSM 第一时间问对问题；</li>
+<li>关键动作排序：<strong>先诊断根因，再高管表态，最后给方案</strong>；没有高层回访，单靠培训无法重建老板的信心；</li>
+<li>健康度从 42.1 回到 83.0 用时 4 个月，说明预警领先期（3 月预警、7 月底到期）足够挽救，<strong>领先期就是挽救窗口</strong>。</li>
+</ul>
+<hr />
+<h2>案例② C0023｜物流渠道切换引发工单风暴，技术介入 + 续约窗口组合拳稳住续约</h2>
+<table>
+<thead>
+<tr>
+<th>档案</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>客户</td>
+<td>C0023，服饰鞋包，中型卖家，基础版 36 席位，ARR ¥4,320，2024-04 签约，合同 2025-07-20 到期</td>
+</tr>
+<tr>
+<td>客户经理</td>
+<td>周衡</td>
+</tr>
+<tr>
+<td>结局</td>
+<td><strong>已续约</strong>（健康度回到 70.2，进入 Q3 持续辅导名单）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>信号时间线</strong></p>
+<table>
+<thead>
+<tr>
+<th>月份</th>
+<th>登录次数</th>
+<th>工单</th>
+<th>平均解决时长</th>
+<th>CSAT</th>
+<th>健康度</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024-11</td>
+<td>328</td>
+<td>8</td>
+<td>5.6h</td>
+<td>4.2</td>
+<td>80.3</td>
+<td>健康</td>
+</tr>
+<tr>
+<td>12 月</td>
+<td>250</td>
+<td><strong>26</strong> ↑</td>
+<td>31.9h</td>
+<td>—</td>
+<td>66.7</td>
+<td>客户切换新物流渠道，面单/回传问题集中爆发</td>
+</tr>
+<tr>
+<td>2025-01</td>
+<td>212</td>
+<td><strong>29</strong></td>
+<td>23.3h</td>
+<td>3.3</td>
+<td>61.3</td>
+<td><strong>R2 红色预警：工单 +175%（10.0→27.5 张/月）、解决 28h、CSAT 3.3</strong></td>
+</tr>
+<tr>
+<td>2 月</td>
+<td>192</td>
+<td>17</td>
+<td>29.9h</td>
+<td>3.0</td>
+<td><strong>51.4</strong></td>
+<td>滑入高风险，工单仍在高位</td>
+</tr>
+<tr>
+<td>3 月</td>
+<td>214</td>
+<td>11</td>
+<td>11.6h</td>
+<td>3.1</td>
+<td>52.9</td>
+<td>技术介入后解决时长回落，但满意度修复滞后</td>
+</tr>
+<tr>
+<td>4 月</td>
+<td>236</td>
+<td>6</td>
+<td>8.6h</td>
+<td>3.0</td>
+<td>57.6</td>
+<td>量的问题解决，情绪的问题还在</td>
+</tr>
+<tr>
+<td>5 月</td>
+<td>260</td>
+<td>5</td>
+<td>6.8h</td>
+<td><strong>4.1</strong></td>
+<td>68.2</td>
+<td>CSAT 修复，进入关注层</td>
+</tr>
+<tr>
+<td>6 月</td>
+<td>272</td>
+<td>2</td>
+<td>8.2h</td>
+<td>4.0</td>
+<td>69.3</td>
+<td><strong>R4 橙色预警：合同剩 49 天，健康度 69.3</strong></td>
+</tr>
+<tr>
+<td>7 月</td>
+<td>283</td>
+<td>7</td>
+<td>7.3h</td>
+<td>4.1</td>
+<td>70.2</td>
+<td><strong>7-20 完成续约</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>预警与干预过程</strong></p>
+<ol>
+<li>1 月 R2 命中后，技术支持专家 48h 内介入，定位根因：新物流渠道的<strong>单号回传接口限流 + 面单模板字段错位</strong>，属配置/兼容性问题而非客户操作问题；</li>
+<li>开通 4h 应急 SLA 通道，2 周内修复接口问题，输出专属《新渠道物流对账与面单配置手册》并做 1 场全员培训；</li>
+<li>工单量 3 月回落（11 张）、解决时长 3 月回到 11.6h，但<strong>满意度修复比指标滞后约 2 个月</strong>（CSAT 5 月才回到 4.1）；</li>
+<li>6 月 R4 续约窗口预警启动：销售 + CSM 联合拜访，用《价值回顾报告》量化事故修复后的发货时效与对账节省，提前处理"出过事凭什么续约"的异议，7-20 续约。</li>
+</ol>
+<p><strong>复盘要点</strong></p>
+<ul>
+<li>R2 的三条件组合（量增 + 解决慢 + 差评）有效区分了"真事故"与"旺季正常波动"——11 月前该客户工单也有 12 张/月，但从未报警；</li>
+<li><strong>体验事故后的信任修复有滞后</strong>：指标好转不等于客户情绪好转，续约谈话必须安排在 CSAT 修复之后（5 月之后）才谈得动；</li>
+<li>续约时健康度仅 70.2，续约不是终点：该客户仍在关注层，Q3 继续推进库存/对账深度模块，防止二次续约时旧伤复发。</li>
+</ul>
+<hr />
+<h2>案例③ C0150｜"安静地离开"：漏警流失复盘，反推 R5 规则上线</h2>
+<table>
+<thead>
+<tr>
+<th>档案</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>客户</td>
+<td>C0150，服饰鞋包，中型卖家，基础版 50 席位，ARR ¥6,000，<strong>2022-03 签约的 3 年老客</strong>，合同 2025-08-20 到期</td>
+</tr>
+<tr>
+<td>客户经理</td>
+<td>林一</td>
+</tr>
+<tr>
+<td>结局</td>
+<td><strong>未续约（流失，年损失 ¥6,000）</strong>，当前预警名单排名第 6（挽救失败）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>信号时间线</strong></p>
+<table>
+<thead>
+<tr>
+<th>月份</th>
+<th>登录次数</th>
+<th>活跃席位</th>
+<th>工单</th>
+<th>CSAT</th>
+<th>使用模块</th>
+<th>健康度</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024-10 ~ 2025-05</td>
+<td>453~476</td>
+<td>39~42</td>
+<td>5~14</td>
+<td>4.1~4.6</td>
+<td><strong>长期 8</strong></td>
+<td>69.7~71.7</td>
+<td><strong>连续 8 个月停在关注层，无任何规则命中</strong></td>
+</tr>
+<tr>
+<td>6 月</td>
+<td>70 ↓</td>
+<td>15</td>
+<td>22</td>
+<td>3.0</td>
+<td>4</td>
+<td><strong>40.1</strong></td>
+<td>数据崩塌，运营已转投竞品</td>
+</tr>
+<tr>
+<td>7 月</td>
+<td>10 ↓</td>
+<td>6</td>
+<td>13</td>
+<td>—</td>
+<td>2</td>
+<td>20.9</td>
+<td><strong>R1 红色 + R4 橙色同时预警，距到期仅 50 天</strong></td>
+</tr>
+<tr>
+<td>8 月</td>
+<td>1</td>
+<td>1</td>
+<td>8</td>
+<td>—</td>
+<td>1</td>
+<td>12.8</td>
+<td>8-20 合同到期流失</td>
+</tr>
+</tbody>
+</table>
+<p><strong>发生了什么（事后回访还原）</strong></p>
+<ul>
+<li>该客户 2025 年拓展 TikTok Shop 与 Temu 新渠道，需要<strong>多平台库存实时同步</strong>能力；团队在 3~4 月内部评估时认为我们"够用但不好用"，5 月决策层拍板切换竞品；</li>
+<li>整个决策期内，席位利用率约 80%、登录稳定、不投诉、CSAT 4.3——<strong>R3（&lt;50% 利用率）不命中，R2（工单风暴）不命中，R1（连续骤降）要等 6 月人走了才命中</strong>；</li>
+<li>7 月 VP 出面回访时客户已完成竞品迁移，报价、赠送服务期均未挽回。</li>
+</ul>
+<p><strong>漏报根因分析</strong></p>
+<table>
+<thead>
+<tr>
+<th>现有规则盲区</th>
+<th>具体表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>规则都在抓"变坏"，没人抓"从不变好"</td>
+<td>健康度 8 个月原地踏步（69.7→71.3），系统视为稳定</td>
+</tr>
+<tr>
+<td>模块零扩张不是预警条件</td>
+<td>使用模块长期停在 8/12，新渠道需求没有任何功能承接信号</td>
+</tr>
+<tr>
+<td>高席位老客的主动经营节奏缺失</td>
+<td>50 席、3 年客龄，本应是 QBR 重点客户，实际只做被动响应</td>
+</tr>
+</tbody>
+</table>
+<p><strong>规则迭代：新增 R5「关注层停滞」</strong></p>
+<blockquote>
+<p><strong>R5：连续 ≥6 个月健康度处于 60–79 区间，且使用模块数零增长 → 黄色预警，触发 CSM 主动经营拜访。</strong></p>
+</blockquote>
+<ul>
+<li>回测：以本期数据回溯，C0150 在 2025 年 3 月即会命中 R5，提前约 3 个月进入主动经营——其时正是客户评估新渠道的窗口期，推送多平台库存方案与竞品对标有可能改变决策；</li>
+<li>配套机制：50 席位以上 / 客龄 2 年以上客户强制每季度 QBR，不依赖系统预警；</li>
+<li><strong>预警体系的成熟标志不是规则越多越好，而是每一次流失都能回放出"最早可干预点"，并把这个点变成下一条规则。</strong></li>
+</ul>
+<hr />
+<h2>三案对照（面试可直接讲的总结）</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>C0007</th>
+<th>C0023</th>
+<th>C0150</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>信号类型</td>
+<td>登录骤降（人走了）</td>
+<td>工单风暴（体验事故）</td>
+<td>关注层停滞（需求外溢）</td>
+</tr>
+<tr>
+<td>命中规则</td>
+<td>R1 + R3</td>
+<td>R2 + R4</td>
+<td>R1 + R4（过晚）</td>
+</tr>
+<tr>
+<td>首次预警距到期</td>
+<td>约 5 个月</td>
+<td>约 6 个月</td>
+<td><strong>仅 50 天</strong></td>
+</tr>
+<tr>
+<td>关键动作</td>
+<td>高层回访 + 新人陪跑</td>
+<td>技术专家 + 应急 SLA</td>
+<td>（无提前动作）</td>
+</tr>
+<tr>
+<td>结局</td>
+<td>续约 + 增购</td>
+<td>续约</td>
+<td>流失 ¥6,000</td>
+</tr>
+<tr>
+<td>沉淀</td>
+<td>人员变动剧本</td>
+<td>事故后信任修复节奏</td>
+<td>催生 R5 规则 + 大客户 QBR 机制</td>
+</tr>
+</tbody>
+</table></div></body></html>

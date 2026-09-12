@@ -1,0 +1,100 @@
+{"qid": "R1004", "question": "物流单号一直不回传是怎么回事？要在哪里重新推送？。。。", "expected_module": "物流发货", "keywords": [], "source": "voc"}
+{"qid": "R0187", "question": "多仓调拨在途库存算哪个仓库？可用数对不上", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0102", "question": "工单在哪里看进度？提交了完全不知道排到哪了", "expected_module": "客户支持服务", "keywords": [], "source": "voc"}
+{"qid": "R0404", "question": "发货后虾皮后台不显示单号，有人知道怎么批量补传吗？", "expected_module": "物流发货", "keywords": [], "source": "voc"}
+{"qid": "R0764", "question": "初始化导入商品有模板吗？字段填错了怎么批量改？", "expected_module": "快速入门", "keywords": [], "source": "voc"}
+{"qid": "R0612", "question": "想看单个店铺的利润要在哪里筛选？", "expected_module": "财务对账", "keywords": [], "source": "voc"}
+{"qid": "R0214", "question": "多属性订单的规格映射在哪里配？发错颜色好几次了", "expected_module": "订单管理", "keywords": [], "source": "voc"}
+{"qid": "R0228", "question": "回传失败的订单有列表可以批量重试吗？", "expected_module": "物流发货", "keywords": [], "source": "voc"}
+{"qid": "R0130", "question": "异常订单被拦截后怎么批量处理？", "expected_module": "订单管理", "keywords": [], "source": "voc"}
+{"qid": "R0763", "question": "采购在途数量怎么统计？为什么和供应商发货数对不上？", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0450", "question": "速卖通授权令牌过期了怎么重新授权？订单会漏吗？无语了", "expected_module": "快速入门", "keywords": [], "source": "voc"}
+{"qid": "R0096", "question": "两个店铺共用一个仓库，库存怎么设置才能同步扣减？🤦", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0849", "question": "Wish平台扣费怎么和订单逐单对账？求操作教程", "expected_module": "财务对账", "keywords": [], "source": "voc"}
+{"qid": "R0158", "question": "同步任务失败后在哪里手动重跑？找不到入口", "expected_module": "常见报错与故障处理", "keywords": [], "source": "voc"}
+{"qid": "R0064", "question": "盘点单审核后差异会自动调整库存吗？", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0163", "question": "库存同步频率在哪里调？能不能按店铺分别设置？😤", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0983", "question": "能不能加急处理？店铺因为同步问题已经停发半天了", "expected_module": "客户支持服务", "keywords": [], "source": "voc"}
+{"qid": "R0249", "question": "自动合单规则在哪里配置？为什么有的合了有的没合？", "expected_module": "订单管理", "keywords": [], "source": "voc"}
+{"qid": "R0400", "question": "请问物流轨迹多久同步一次？为什么买家说查不到？", "expected_module": "物流发货", "keywords": [], "source": "voc"}
+{"qid": "R0619", "question": "安全库存预警的通知在哪里开？一直收不到提醒", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0994", "question": "客服远程协助怎么申请？需要开什么权限？", "expected_module": "客户支持服务", "keywords": [], "source": "voc"}
+{"qid": "R0717", "question": "Shopee有订单系统里没同步过来，怎么手动拉取？", "expected_module": "订单管理", "keywords": [], "source": "voc"}
+{"qid": "R1012", "question": "工单在哪里看进度？提交了完全不知道排到哪了，同意楼上", "expected_module": "客户支持服务", "keywords": [], "source": "voc"}
+{"qid": "R0667", "question": "年付和月付差多少钱？有没有老客户续费优惠？", "expected_module": "套餐与计费", "keywords": [], "source": "voc"}
+{"qid": "R0580", "question": "客观说一句，价格中等，主要看旺季能不能撑住，撑住就值", "expected_module": "套餐与计费", "keywords": [], "source": "voc"}
+{"qid": "R0293", "question": "为什么系统库存和实际盘点对不上？应该从哪里排查？", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0437", "question": "订单页一直转圈加载不出来是什么原因？清缓存也没用", "expected_module": "常见报错与故障处理", "keywords": [], "source": "voc"}
+{"qid": "R0944", "question": "SKU和平台商品怎么映射？导入模板怎么填？", "expected_module": "快速入门", "keywords": [], "source": "voc"}
+{"qid": "R0087", "question": "买家取消的订单为什么仓库还能看到？怎么拦截？", "expected_module": "订单管理", "keywords": [], "source": "voc"}
+{"qid": "R0274", "question": "订单备注和买家留言能同步到拣货单上吗？", "expected_module": "订单管理", "keywords": [], "source": "voc"}
+{"qid": "R0528", "question": "为什么有的订单显示同步失败？失败的单在哪里看？", "expected_module": "订单管理", "keywords": [], "source": "voc"}
+{"qid": "R0561", "question": "亚马逊授权令牌过期了怎么重新授权？订单会漏吗？", "expected_module": "快速入门", "keywords": [], "source": "voc"}
+{"qid": "R0475", "question": "升级之后频繁闪退是什么情况？要回退版本吗？", "expected_module": "常见报错与故障处理", "keywords": [], "source": "voc"}
+{"qid": "R1033", "question": "回传失败的订单有列表可以批量重试吗？ 我也遇到了", "expected_module": "物流发货", "keywords": [], "source": "voc"}
+{"qid": "R0443", "question": "页面提示服务器繁忙错误码503要等多久？", "expected_module": "常见报错与故障处理", "keywords": [], "source": "voc"}
+{"qid": "R0576", "question": "跟踪号换单号了要在哪个页面更新？", "expected_module": "物流发货", "keywords": [], "source": "voc"}
+{"qid": "R0260", "question": "新员工培训课程在哪里报名？有录播可以回看吗？", "expected_module": "快速入门", "keywords": [], "source": "voc"}
+{"qid": "R0091", "question": "请问人工客服几点下班？晚上发的工单第二天会处理吗？", "expected_module": "客户支持服务", "keywords": [], "source": "voc"}
+{"qid": "R0533", "question": "自动审单规则的优先级怎么排？两条规则冲突怎么办？", "expected_module": "订单管理", "keywords": [], "source": "voc"}
+{"qid": "R0345", "question": "怎么把Temu的listing一键搬到另一个店铺？", "expected_module": "刊登与商品发布", "keywords": [], "source": "voc"}
+{"qid": "R0068", "question": "组合商品库存扣减规则有人讲一下吗？套装总是负库存", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0100", "question": "吐槽一下，价格中等，主要看旺季能不能撑住，撑住就值，有用点个赞", "expected_module": "套餐与计费", "keywords": [], "source": "voc"}
+{"qid": "R0303", "question": "导出几万行报表总是超时，有分批导出的办法吗？", "expected_module": "常见报错与故障处理", "keywords": [], "source": "voc"}
+{"qid": "R0224", "question": "利润报表的广告费从哪取数？为什么和手动算的有差？", "expected_module": "财务对账", "keywords": [], "source": "voc"}
+{"qid": "R0645", "question": "席位可以按月增减吗？旺季想临时加几个", "expected_module": "套餐与计费", "keywords": [], "source": "voc"}
+{"qid": "R0681", "question": "多店铺共用一个支付账户能分开核算利润吗？", "expected_module": "财务对账", "keywords": [], "source": "voc"}
+{"qid": "R0988", "question": "新手第一次用应该先学哪几个模块？有没有操作顺序建议？", "expected_module": "快速入门", "keywords": [], "source": "voc"}
+{"qid": "R0679", "question": "物流超时预警在哪里设置？想让客服提前介入", "expected_module": "物流发货", "keywords": [], "source": "voc"}
+{"qid": "R0671", "question": "批量审单总超时失败，一次最多能处理多少单？🤦", "expected_module": "常见报错与故障处理", "keywords": [], "source": "voc"}
+{"qid": "R0545", "question": "定时刊登在哪里设置？想卡在平台流量高峰上线", "expected_module": "刊登与商品发布", "keywords": [], "source": "voc"}
+{"qid": "R0048", "question": "发票在哪里申请？可以开增值税专用发票吗？", "expected_module": "套餐与计费", "keywords": [], "source": "voc"}
+{"qid": "R0304", "question": "FBA仓库存和本地仓库存能合并显示吗？", "expected_module": "库存管理", "keywords": [], "source": "voc"}
+{"qid": "R0018", "question": "采集别人店铺的商品会侵权吗？图片怎么处理？", "expected_module": "刊登与商品发布", "keywords": [], "source": "voc"}
+{"qid": "R0222", "question": "发货后订单状态多久变成已揽收？能手动触发同步吗？", "expected_module": "物流发货", "keywords": [], "source": "voc"}
+{"qid": "R0276", "question": "专业版和旗舰版具体差哪些功能？官网对比表看不懂", "expected_module": "套餐与计费", "keywords": [], "source": "voc"}
+{"qid": "R1038", "question": "虾皮平台扣费怎么和订单逐单对账？求操作教程 我也遇到了", "expected_module": "财务对账", "keywords": [], "source": "voc"}
+{"qid": "R0335", "question": "头程运费怎么分摊到每个SKU成本里？", "expected_module": "财务对账", "keywords": [], "source": "voc"}
+{"qid": "R0587", "question": "怎么把Wish的listing一键搬到另一个店铺？无语了", "expected_module": "刊登与商品发布", "keywords": [], "source": "voc"}
+{"qid": "R0156", "question": "类目映射表在哪里维护？刊登总被退回", "expected_module": "刊登与商品发布", "keywords": [], "source": "voc"}
+{"qid": "R0562", "question": "退款和平台罚款在利润里怎么体现？", "expected_module": "财务对账", "keywords": [], "source": "voc"}
+{"qid": "E001", "question": "店铺授权一直不成功，有没有一步一步的教程？", "expected_module": "店铺授权", "keywords": ["授权", "Cookie", "主账号"], "source": "curated"}
+{"qid": "E002", "question": "亚马逊授权提示InvalidToken怎么回事", "expected_module": "店铺授权", "keywords": ["Token", "区域"], "source": "curated"}
+{"qid": "E004", "question": "一个店铺可以同时授权给两个ERP吗", "expected_module": "店铺授权", "keywords": ["库存推送", "并行"], "source": "curated"}
+{"qid": "E005", "question": "SKU和平台商品怎么映射，导入模板怎么填", "expected_module": "商品与SKU", "keywords": ["系统SKU", "ItemID"], "source": "curated"}
+{"qid": "E006", "question": "套装卖出去子品库存没减，怎么排查", "expected_module": "商品与SKU", "keywords": ["BOM", "用量"], "source": "curated"}
+{"qid": "E007", "question": "SKU编码规则有什么建议", "expected_module": "商品与SKU", "keywords": ["品类", "流水号"], "source": "curated"}
+{"qid": "E008", "question": "平台有订单系统里没有，怎么手动拉取", "expected_module": "订单管理", "keywords": ["手动拉单", "时间范围"], "source": "curated"}
+{"qid": "E009", "question": "同步失败的订单在哪里看", "expected_module": "订单管理", "keywords": ["同步日志", "重试"], "source": "curated"}
+{"qid": "E010", "question": "自动合单为什么有的合了有的没合", "expected_module": "订单管理", "keywords": ["收件人", "时间窗口"], "source": "curated"}
+{"qid": "E011", "question": "买家取消订单了为什么仓库还能看到", "expected_module": "订单管理", "keywords": ["打单", "时间线"], "source": "curated"}
+{"qid": "E012", "question": "自动审单规则冲突了按哪个执行", "expected_module": "订单管理", "keywords": ["优先级", "顺序"], "source": "curated"}
+{"qid": "E014", "question": "物流商的API密钥填在哪里，一直校验失败", "expected_module": "物流发货", "keywords": ["API", "白名单"], "source": "curated"}
+{"qid": "E015", "question": "回传失败的订单可以批量重试吗", "expected_module": "物流发货", "keywords": ["批量补传", "重试"], "source": "curated"}
+{"qid": "E016", "question": "面单打印位置偏移怎么校准", "expected_module": "物流发货", "keywords": ["偏移", "模板"], "source": "curated"}
+{"qid": "E017", "question": "跟踪号换了要在哪个页面更新", "expected_module": "物流发货", "keywords": ["更换跟踪号", "回传"], "source": "curated"}
+{"qid": "E018", "question": "物流轨迹停滞多久算超时，在哪设预警", "expected_module": "物流发货", "keywords": ["预警", "停滞"], "source": "curated"}
+{"qid": "E019", "question": "两个店铺共用一个仓库库存怎么同步扣减", "expected_module": "库存管理", "keywords": ["共享", "SKU"], "source": "curated"}
+{"qid": "E020", "question": "盘点审核后差异会自动调库存吗", "expected_module": "库存管理", "keywords": ["盘盈", "盘亏"], "source": "curated"}
+{"qid": "E021", "question": "采购在途数量和供应商发货数对不上", "expected_module": "库存管理", "keywords": ["采购单", "实收"], "source": "curated"}
+{"qid": "E023", "question": "活动锁定的库存结束后怎么释放", "expected_module": "库存管理", "keywords": ["活动", "释放"], "source": "curated"}
+{"qid": "E024", "question": "零库存怎么自动下架防止超卖", "expected_module": "库存管理", "keywords": ["自动下架", "零库存"], "source": "curated"}
+{"qid": "E025", "question": "头程运费怎么分摊到SKU成本", "expected_module": "财务对账", "keywords": ["重量", "体积", "分摊"], "source": "curated"}
+{"qid": "E026", "question": "平台扣费怎么逐单对账", "expected_module": "财务对账", "keywords": ["结算报告", "匹配"], "source": "curated"}
+{"qid": "E027", "question": "想看单个店铺的利润在哪里筛选", "expected_module": "财务对账", "keywords": ["店铺", "利润"], "source": "curated"}
+{"qid": "E028", "question": "利润报表和会计账对不上怎么排查", "expected_module": "财务对账", "keywords": ["口径", "跨期"], "source": "curated"}
+{"qid": "E029", "question": "可以开增值税专用发票吗", "expected_module": "套餐与计费", "keywords": ["专用发票", "资质"], "source": "curated"}
+{"qid": "E030", "question": "免费试用多久，到期数据保留多久", "expected_module": "套餐与计费", "keywords": ["15天", "180天"], "source": "curated"}
+{"qid": "E031", "question": "大促临时加席位多少钱，到期会怎样", "expected_module": "套餐与计费", "keywords": ["临时席位", "回收"], "source": "curated"}
+{"qid": "E032", "question": "订单量超了套餐额度怎么办", "expected_module": "套餐与计费", "keywords": ["超额", "宽限"], "source": "curated"}
+{"qid": "E033", "question": "打印控件加载失败连不上打印机", "expected_module": "常见报错与故障处理", "keywords": ["控件", "端口"], "source": "curated"}
+{"qid": "E034", "question": "页面一直转圈503错误要等多久", "expected_module": "常见报错与故障处理", "keywords": ["503", "重试"], "source": "curated"}
+{"qid": "E035", "question": "批量审单总超时，一次最多多少单", "expected_module": "常见报错与故障处理", "keywords": ["500", "异步"], "source": "curated"}
+{"qid": "E036", "question": "导出几万行报表总是超时", "expected_module": "数据报表", "keywords": ["异步导出", "任务中心"], "source": "curated"}
+{"qid": "E037", "question": "子账号看不到利润字段怎么开", "expected_module": "账号与权限", "keywords": ["角色", "字段"], "source": "curated"}
+{"qid": "E038", "question": "离职员工账号怎么处理", "expected_module": "账号与权限", "keywords": ["停用", "日志"], "source": "curated"}
+{"qid": "E040", "question": "刊登提示属性缺失怎么查", "expected_module": "刊登与商品发布", "keywords": ["缺失", "预检"], "source": "curated"}
+{"qid": "E042", "question": "晚上发的工单第二天会处理吗", "expected_module": "客户支持服务", "keywords": ["值班", "工单"], "source": "curated"}
+{"qid": "E044", "question": "远程协助怎么申请", "expected_module": "客户支持服务", "keywords": ["远程", "同意"], "source": "curated"}
+{"qid": "E045", "question": "新手第一次用先学哪几个模块", "expected_module": "快速入门", "keywords": ["顺序", "首单"], "source": "curated"}
+{"qid": "E046", "question": "首单跑通的标准流程是什么", "expected_module": "快速入门", "keywords": ["同步", "回传"], "source": "curated"}

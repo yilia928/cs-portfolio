@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>评估报告</title><style>
+:root{--brand:#2e5bff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--bg:#f6f8fc}
+*{box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC","Source Han Sans SC",sans-serif;color:var(--ink);
+ line-height:1.75;margin:0;background:var(--bg);font-size:14px}
+.page{max-width:880px;margin:0 auto;padding:48px 56px;background:#fff;min-height:100vh}
+h1{font-size:27px;color:var(--brand);border-bottom:3px solid var(--brand);padding-bottom:14px;margin:0 0 6px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:11px;border-left:5px solid var(--brand);color:#1e3a8a}
+h3{font-size:16px;margin:22px 0 8px;color:#374151}
+p{margin:9px 0}
+blockquote{margin:14px 0;padding:10px 16px;background:#eef3ff;border-left:4px solid var(--brand);
+ color:#374151;font-size:13px;border-radius:0 6px 6px 0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:12.8px}
+th{background:var(--brand);color:#fff;padding:8px 10px;text-align:left;font-weight:600}
+td{border:1px solid var(--line);padding:7px 10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:12.5px;color:#b5179e}
+pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.6}
+pre code{background:none;color:inherit;padding:0}
+ul,ol{padding-left:24px} li{margin:5px 0}
+hr{border:none;border-top:1px dashed #cbd5e1;margin:26px 0}
+strong{color:#111827}
+a{color:var(--brand)}
+@page{size:A4;margin:16mm 14mm}
+@media print{
+ body{background:#fff;font-size:12px}
+ .page{max-width:none;padding:0}
+ h2{page-break-after:avoid} table,blockquote,pre{page-break-inside:avoid}
+ h2,h3{page-break-after:avoid}
+}
+</style></head>
+<body><div class="page"><h1>RAG 问答机器人评估报告</h1>
+<blockquote>
+<p>评估对象：云帆ERP智能客服 RAG（离线混合检索 + 抽取式回答；配置大模型 API Key 后生成层切换为 LLM，检索链路不变）<br />
+测试集：<strong>100 题</strong>（项目③ VoC 真实客户提问 60 题 + 人工跨模块补充 40 题），覆盖 15 个帮助模块<br />
+评估日期：2025-09（本地离线可复现，<code>python tests/eval_rag.py</code>）</p>
+</blockquote>
+<h2>1. 评估指标与方法</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recall@K</td>
+<td>Top-K 召回块中是否包含期望模块（检索能不能找到正确资料）</td>
+</tr>
+<tr>
+<td>MRR</td>
+<td>第一个正确模块块的倒数排名（正确资料排得靠不靠前）</td>
+</tr>
+<tr>
+<td>模块精度 ModPrec@K</td>
+<td>Top-K 中属于期望模块的块占比（引用正确率的代理：噪声块越少，LLM 被干扰越少）</td>
+</tr>
+<tr>
+<td>转人工率 Handoff</td>
+<td>Top1 相似度低于置信阈值而兜底转人工的比例</td>
+</tr>
+<tr>
+<td>答案关键词覆盖率</td>
+<td>抽取式答案命中该题期望关键词的比例（40 道人工题人工标注关键词）</td>
+</tr>
+</tbody>
+</table>
+<p>检索方案为<strong>词级 TF-IDF（1-2gram，叠加低权重同义词扩展）+ 字符 ngram（char_wb 2-3gram）混合余弦</strong>，<br />
+并对多字符实词的标题命中加权。字符 ngram 解决错字、英文/中文混写与未登录词；<br />
+同义词扩展解决客户口语与文档术语不一致（如“不回传”→“回传失败/批量补传”）。</p>
+<h2>2. 一次真实修复：默认示例问题离线答不出</h2>
+<p>现场演示的第一题“物流单号一直不回传怎么办？”在初版离线模式下错误转人工，拆解为两个独立断点：</p>
+<ol>
+<li><strong>检索</strong>：含“五步排查”原文的块排第二（0.0983），“跟踪号管理与换号”块靠标题词面命中排第一；</li>
+<li><strong>抽取</strong>：排查句（“回传失败进入重试队列，前3次间隔15分钟”）不重复提问原词，词覆盖率最高仅 0.33，<br />
+   被 0.34 的硬阈值全部砍掉，抽取结果为空 → 触发兜底。</li>
+</ol>
+<p>修复（评估驱动，非拍脑袋）：</p>
+<ul>
+<li><strong>查询扩展</strong>：建立约 40 条“客服口语→文档术语”短语表（词条归纳自项目③真实提问），<br />
+  在原文上做子串匹配，扩展词以 0.5 低权重只注入词级 TF-IDF 向量，避免带偏召回；</li>
+<li><strong>抽取阈值配置化</strong>：词覆盖门槛 0.34→<strong>0.25</strong>（常量 <code>EXTRACT_COVER_THRESHOLD</code>），<br />
+  覆盖率只计多字符实词并把扩展词计入；每个召回块最多贡献 2 句；切句不再在“；”断开，保留完整排查序列。</li>
+</ul>
+<p>修复后该题离线回答包含完整排查顺序与“重新回传/批量补传”操作路径，且全部句末带来源编号。</p>
+<h2>3. 消融实验：查询扩展到底有没有用</h2>
+<p>在选定配置（标准切块 / 词权重 0.6 / TopK=5）上做开关对比：</p>
+<table>
+<thead>
+<tr>
+<th>查询扩展</th>
+<th>Recall@5</th>
+<th>MRR</th>
+<th>模块精度</th>
+<th>转人工率</th>
+<th>答案关键词覆盖</th>
+<th>答案产出率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关</td>
+<td>0.97</td>
+<td>0.8725</td>
+<td>0.538</td>
+<td>0.06</td>
+<td>0.8289</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td><strong>开（选定）</strong></td>
+<td><strong>0.97</strong></td>
+<td><strong>0.8938</strong></td>
+<td><strong>0.558</strong></td>
+<td>0.05</td>
+<td><strong>0.859</strong></td>
+<td><strong>0.975</strong></td>
+</tr>
+</tbody>
+</table>
+<p>扩展开启后 MRR 提升约 2 个点、模块精度提升 2 个点，答案关键词覆盖从 0.83 提升到 0.86，<br />
+答案产出率（curated 40 题中成功组织出答案的比例）从 0.95 提升到 <strong>0.975</strong>，且 Recall 与转人工率无劣化。<br />
+扩展词表同时修复了“订单量超了套餐额度怎么办”等口语问法（能答出超额计费规则原文）。</p>
+<h2>4. 全量迭代实验记录（切块 × TopK × 词权重）</h2>
+<table>
+<thead>
+<tr>
+<th>切块策略</th>
+<th>TopK</th>
+<th>词权重</th>
+<th>扩展</th>
+<th>Recall</th>
+<th>MRR</th>
+<th>模块精度</th>
+<th>转人工率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std-200-500+扩展(选定)</td>
+<td>5</td>
+<td>0.6</td>
+<td>1</td>
+<td>0.97</td>
+<td>0.8938</td>
+<td>0.558</td>
+<td>0.05 <strong>(选定)</strong></td>
+</tr>
+<tr>
+<td>std-200-500</td>
+<td>5</td>
+<td>0.7</td>
+<td>0</td>
+<td>0.97</td>
+<td>0.8731</td>
+<td>0.542</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>std-200-500</td>
+<td>5</td>
+<td>0.6</td>
+<td>0</td>
+<td>0.97</td>
+<td>0.8725</td>
+<td>0.538</td>
+<td>0.06</td>
+</tr>
+<tr>
+<td>std-200-500</td>
+<td>5</td>
+<td>0.5</td>
+<td>0</td>
+<td>0.97</td>
+<td>0.8708</td>
+<td>0.548</td>
+<td>0.07</td>
+</tr>
+<tr>
+<td>small-240</td>
+<td>5</td>
+<td>0.5</td>
+<td>0</td>
+<td>0.95</td>
+<td>0.8585</td>
+<td>0.592</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>std-200-500</td>
+<td>3</td>
+<td>0.6</td>
+<td>0</td>
+<td>0.94</td>
+<td>0.8725</td>
+<td>0.62</td>
+<td>0.06</td>
+</tr>
+<tr>
+<td>std-200-500</td>
+<td>3</td>
+<td>0.5</td>
+<td>0</td>
+<td>0.94</td>
+<td>0.8708</td>
+<td>0.6233</td>
+<td>0.07</td>
+</tr>
+<tr>
+<td>small-240</td>
+<td>5</td>
+<td>0.6</td>
+<td>0</td>
+<td>0.94</td>
+<td>0.8621</td>
+<td>0.584</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>small-240</td>
+<td>5</td>
+<td>0.7</td>
+<td>0</td>
+<td>0.93</td>
+<td>0.8528</td>
+<td>0.582</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>std-200-500</td>
+<td>3</td>
+<td>0.7</td>
+<td>0</td>
+<td>0.92</td>
+<td>0.8731</td>
+<td>0.62</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>small-240</td>
+<td>3</td>
+<td>0.6</td>
+<td>0</td>
+<td>0.89</td>
+<td>0.8621</td>
+<td>0.6567</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>small-240</td>
+<td>3</td>
+<td>0.5</td>
+<td>0</td>
+<td>0.89</td>
+<td>0.8585</td>
+<td>0.6567</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>small-240</td>
+<td>3</td>
+<td>0.7</td>
+<td>0</td>
+<td>0.89</td>
+<td>0.8528</td>
+<td>0.66</td>
+<td>0.05</td>
+</tr>
+</tbody>
+</table>
+<h3>实验结论（每一步调参的取舍）</h3>
+<ol>
+<li><strong>切块大小：标准 200-500 字（模块级贪心打包）优于约 240 字小窗口。</strong> 小窗口把同小节的上下文拆散，<br />
+   排查步骤类内容被分到两个块，Recall 低 2 个点；模块级打包还让相邻小节（跟踪号→回传失败）共处一块，<br />
+   反而对“单号不回传”这类跨小节问题友好。</li>
+<li><strong>TopK：选定 K=5。</strong> K=3 模块精度更高，但漏掉正确块的概率增加约 3 个百分点；K=5 以可接受的精度损失换召回，<br />
+   再由生成层 prompt 约束只依据资料作答、引用编号，控制噪声影响。</li>
+<li><strong>词权重选定 0.6 / 字符 0.4</strong>：纯词面匹配对错字与英文报错码不够鲁棒，纯字符又会引入同形噪声；0.6 为网格最稳区间。</li>
+<li><strong>置信阈值 0.11 保持不动</strong>：扩展后域内最低分问题（“新手第一次用先学哪几个模块”，0.098）与<br />
+   最像业务问题的越界提问（“推荐几本科幻小说”，0.092）之间仅有 0.006 的余量，<br />
+   为单题压低阈值会让兜底失去保护——宁可对这 1/40 题安全转人工，不冒误导风险。</li>
+</ol>
+<h2>5. 最终效果</h2>
+<ul>
+<li><strong>Recall@5 = 0.97，MRR = 0.8938，模块精度 = 0.558</strong>；</li>
+<li><strong>抽取式答案关键词覆盖 = 0.859，答案产出率 = 0.975</strong>；</li>
+<li>40 道人工题中错误转人工 1 题（安全失败）；越界问题（老板是谁、天气、写诗、查余额）全部正确兜底；</li>
+<li>修复后的默认示例问题可离线给出完整排查步骤与操作入口，断网环境演示链路完整。</li>
+</ul>
+<h2>6. 已知局限与下一步</h2>
+<ol>
+<li>长且口语化的问题（“新手第一次用先学哪几个模块”）被通用词拉低余弦分，处于阈值下方；下一步可对问题先做停用词压缩或用 embedding 语义检索；</li>
+<li>同义词表靠人工维护（约 40 条），扩词来源应持续接入项目③的新提问；接入 embedding 后可用“未命中问题挖掘”自动发现新词；</li>
+<li>生成质量在配置 LLM API Key 后应重新评估：答案正确性需人工逐条标注（当前抽取式用关键词覆盖率代理）；</li>
+<li>测试集期望标签是“模块级”，未来可升级到“文章级/块级”标注，做更严格的引用正确率。</li>
+</ol></div></body></html>

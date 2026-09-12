@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>客户成功指标体系与流失预警看板</title>
+<script src="../assets/echarts.min.js"></script>  <!-- 本地引用，断网可用；重新生成前需保证 assets/echarts.min.js 存在（从 echarts@5.5.0 CDN 下载一次即可） -->
+<style>
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f2f4f8;color:#263238;padding:24px}
+ h1{font-size:24px} .head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px}
+ .head .sub{color:#78909c;margin-top:6px;font-size:13px}
+ .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:16px}
+ .kpi{background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+ .kpi .v{font-size:28px;font-weight:700;margin:6px 0} .kpi .l{font-size:13px;color:#78909c}
+ .kpi .d{font-size:12px;margin-top:4px}
+ .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+ .card{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+ .card h3{font-size:15px;margin-bottom:8px;border-left:4px solid #2e7dff;padding-left:8px}
+ table{width:100%;border-collapse:collapse;font-size:12.5px}
+ th,td{padding:8px 8px;border-bottom:1px solid #eceff1;text-align:left;vertical-align:top}
+ th{background:#f8fafc;color:#546e7a;font-weight:600;white-space:nowrap}
+ .rk{color:#90a4ae;font-weight:700} .sub{color:#90a4ae;font-size:11.5px}
+ .hscore{font-weight:700;font-size:15px}
+ .badge{color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;white-space:nowrap}
+ .ev{max-width:300px;color:#5d4037} .act{max-width:260px;color:#37474f}
+ .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+ .case-card{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+ .case-h{display:flex;flex-direction:column;gap:3px;margin-bottom:4px}
+ .story{font-size:12px;color:#546e7a;line-height:1.65;margin-top:6px}
+ .foot{color:#90a4ae;font-size:12px;text-align:center;margin:10px 0 4px}
+ @media print{body{background:#fff} .card,.kpi,.case-card{box-shadow:none;border:1px solid #e0e0e0}}
+</style></head><body>
+<div class="head">
+ <div><h1>客户成功指标体系与流失预警看板</h1>
+ <div class="sub">跨境电商 SaaS · 500家客户 · 数据窗口 2024-09 ~ 2025-08 · 分析基准日 2025-09-01（模拟数据，种子42可复现）</div></div>
+ <div class="sub">健康度 = 使用率40% + 登录趋势25% + 工单趋势25% + CSAT10%</div>
+</div>
+<div class="kpis">
+ <div class="kpi"><div class="l">整体续约率</div><div class="v" style="color:#2e7dff">77.1%</div><div class="d sub">到期380家 / 续约293家</div></div>
+ <div class="kpi"><div class="l">平均健康度</div><div class="v" style="color:#00897b">71.8</div><div class="d sub">在服413家</div></div>
+ <div class="kpi"><div class="l">高风险客户</div><div class="v" style="color:#e53935">56</div><div class="d sub">关注202 / 健康155</div></div>
+ <div class="kpi"><div class="l">当月预警客户</div><div class="v" style="color:#fb8c00">63</div><div class="d sub">红19 橙22 黄22</div></div>
+ <div class="kpi"><div class="l">风险 ARR</div><div class="v" style="color:#8e24aa">¥347,760</div><div class="d sub">红/橙客户年合同额</div></div>
+ <div class="kpi"><div class="l">已流失客户</div><div class="v" style="color:#616161">87</div><div class="d sub">待续约120家</div></div>
+</div>
+<div class="grid2">
+ <div class="card"><h3>续约率趋势（按到期月份队列）</h3><div id="c_renew" style="height:290px"></div></div>
+ <div class="card"><h3>健康度分层占比（当前在服客户）</h3><div id="c_tier" style="height:290px"></div></div>
+</div>
+<div class="grid2">
+ <div class="card"><h3>在服客户平均健康度趋势（12个月）</h3><div id="c_htrend" style="height:280px"></div></div>
+ <div class="card"><h3>行业 × 健康度分层</h3><div id="c_ind" style="height:280px"></div></div>
+</div>
+<div class="card" style="margin-bottom:14px"><h3>流失预警 TOP 15（按严重度 × 健康度排序，附触发证据与干预动作）</h3>
+<table><thead><tr><th>#</th><th>客户</th><th>健康度</th><th>预警</th><th>触发证据</th><th>建议干预动作</th></tr></thead>
+<tbody>
+    <tr>
+      <td class="rk">1</td>
+      <td><b>C0406</b><br><span class="sub">3C电子 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">11.6</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 86%/89%（65→9→1次），健康度11.6</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">2</td>
+      <td><b>C0046</b><br><span class="sub">3C电子 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">11.7</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 86%/89%（64→9→1次），健康度11.7</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">3</td>
+      <td><b>C0415</b><br><span class="sub">服饰鞋包 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">11.8</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 83%/89%（54→9→1次），健康度11.8</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">4</td>
+      <td><b>C0101</b><br><span class="sub">户外运动 · 旗舰版</span></td>
+      <td><span class="hscore" style="color:#e53935">11.9</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 85%/92%（88→13→1次），健康度11.9</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">5</td>
+      <td><b>C0143</b><br><span class="sub">户外运动 · 专业版</span></td>
+      <td><span class="hscore" style="color:#e53935">12.1</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 84%/100%（32→5→0次），健康度12.1</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">6</td>
+      <td><b>C0150</b><br><span class="sub">服饰鞋包 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">12.8</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 86%/90%（70→10→1次），健康度12.8</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">7</td>
+      <td><b>C0135</b><br><span class="sub">母婴玩具 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">14.6</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 56%/36%（32→14→9次），健康度14.6</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">8</td>
+      <td><b>C0480</b><br><span class="sub">家居园艺 · 专业版</span></td>
+      <td><span class="hscore" style="color:#e53935">20.7</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 87%/100%（30→4→0次），健康度20.7</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">9</td>
+      <td><b>C0446</b><br><span class="sub">户外运动 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">21.4</span></td>
+      <td><span class="badge" style="background:#e53935">R2 红色预警</span></td>
+      <td class="ev">近2月工单较前2月增长 100%（1.0→2.0张/月），平均解决71h，CSAT 2.6</td>
+      <td class="act">技术支持专家48小时内介入排查根因；开通应急通道（响应SLA提升至4小时）</td>
+    </tr>
+    <tr>
+      <td class="rk">10</td>
+      <td><b>C0275</b><br><span class="sub">服饰鞋包 · 专业版</span></td>
+      <td><span class="hscore" style="color:#e53935">22.2</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 57%/56%（324→140→62次），健康度22.2</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">11</td>
+      <td><b>C0482</b><br><span class="sub">户外运动 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">22.6</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 58%/54%（128→54→25次），健康度22.6</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">12</td>
+      <td><b>C0245</b><br><span class="sub">服饰鞋包 · 专业版</span></td>
+      <td><span class="hscore" style="color:#e53935">23.7</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 65%/53%（226→79→37次），健康度23.7</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">13</td>
+      <td><b>C0166</b><br><span class="sub">工业品 · 专业版</span></td>
+      <td><span class="hscore" style="color:#e53935">26.5</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 56%/67%（55→24→8次），健康度26.5</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">14</td>
+      <td><b>C0153</b><br><span class="sub">服饰鞋包 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">29.8</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 62%/67%（127→48→16次），健康度29.8</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr>
+    <tr>
+      <td class="rk">15</td>
+      <td><b>C0382</b><br><span class="sub">家居园艺 · 基础版</span></td>
+      <td><span class="hscore" style="color:#e53935">33.3</span></td>
+      <td><span class="badge" style="background:#e53935">R1 红色预警</span></td>
+      <td class="ev">登录连续两月环比下降 58%/50%（91→38→19次），健康度33.3</td>
+      <td class="act">48小时内客户成功总监+销售VP高层回访；CSM 24小时内电话诊断流失根因</td>
+    </tr></tbody></table></div>
+<div class="cases">
+    <div class="case-card">
+      <div class="case-h"><b>案例① 信号→预警→高层干预→挽回成功</b><span class="sub">美妆个护 · 专业版 · 13席位</span></div>
+      <div id="chart_case_C0007" style="height:170px"></div>
+      <p class="story">2月登录断崖，3月R1红色预警（102→31→20次）。48h内CSM外呼诊断为核心运营离职，随即启动高层回访+新运营1v1培训+30天激活任务；8月健康度回升至83，7月按期续约并增购5席位。</p>
+    </div>
+    <div class="case-card">
+      <div class="case-h"><b>案例② 工单风暴→技术介入→稳住续约</b><span class="sub">服饰鞋包 · 基础版 · 36席位</span></div>
+      <div id="chart_case_C0023" style="height:170px"></div>
+      <p class="story">12月切换新物流渠道后工单激增，1月R2红色预警（工单+175%、解决28h、CSAT 3.3）。技术专家48h介入、开通4小时SLA通道并输出《物流对账操作手册》；5月CSAT回到4.1，7月续约。</p>
+    </div>
+    <div class="case-card">
+      <div class="case-h"><b>案例③ 漏警复盘→规则迭代</b><span class="sub">服饰鞋包 · 基础版 · 50席位</span></div>
+      <div id="chart_case_C0150" style="height:170px"></div>
+      <p class="story">崩前9个月健康度长期停在69~72（关注层），无任何规则命中；6月数据崩塌（453→70→10），7月才触发R1，距到期仅50天，老板已签约竞品，8月20日流失。复盘后新增R5『关注层停滞』规则。</p>
+    </div></div>
+<div class="foot">数据源：customers.csv / monthly_usage.csv（pandas 生成） · 评分：02_metrics_scoring.py · 预警规则 R1-R4 全部可解释</div>
+<script>
+const ZH = {tooltip:'#fff'};
+const renewMonths = ["2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08"];
+echarts.init(document.getElementById('c_renew')).setOption({
+ tooltip:{trigger:'axis'}, legend:{data:['到期数','续约率'],top:0}, grid:{left:50,right:55,top:40,bottom:30},
+ xAxis:{type:'category',data:renewMonths},
+ yAxis:[{type:'value',name:'家'},{type:'value',name:'%',min:50,max:100}],
+ series:[{name:'到期数',type:'bar',data:[61, 65, 66, 57, 64, 67],
+   itemStyle:{color:'#bbdefb'},label:{show:true,position:'top',fontSize:11}},
+  {name:'续约率',type:'line',yAxisIndex:1,smooth:true,data:[65.6, 72.3, 83.3, 77.2, 78.1, 85.1],
+   itemStyle:{color:'#2e7dff'},lineStyle:{width:3},label:{show:true,formatter:'{c}%',fontSize:11}}]
+});
+const total = 413;
+echarts.init(document.getElementById('c_tier')).setOption({
+ tooltip:{trigger:'item',formatter:'{b}: {c}家 ({d}%)'}, legend:{bottom:0},
+ series:[{type:'pie',radius:['45%','72%'],center:['50%','46%'],
+  label:{formatter:'{b}\n{c}家 {d}%',fontSize:12},
+  data:[{value:155,name:'健康 ≥80',itemStyle:{color:'#43a047'}},
+        {value:202,name:'关注 60-79',itemStyle:{color:'#fb8c00'}},
+        {value:56,name:'高风险 <60',itemStyle:{color:'#e53935'}}]}]
+});
+echarts.init(document.getElementById('c_htrend')).setOption({
+ tooltip:{trigger:'axis'},grid:{left:45,right:20,top:30,bottom:30},
+ xAxis:{type:'category',data:["2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08"]},
+ yAxis:{type:'value',min:50,max:90},
+ series:[{type:'line',smooth:true,data:[73.3, 73.4, 73.7, 73.9, 73.8, 72.5, 71.3, 70.7, 71.0, 70.6, 70.5, 70.9],
+  lineStyle:{width:3,color:'#00897b'},itemStyle:{color:'#00897b'},areaStyle:{color:'rgba(0,137,123,.12)'},
+  markLine:{silent:true,data:[{yAxis:80,lineStyle:{color:'#43a047',type:'dashed'},label:{formatter:'健康线80'}},
+   {yAxis:60,lineStyle:{color:'#e53935',type:'dashed'},label:{formatter:'风险线60'}}]}}]
+});
+const ind = [{"industry": "服饰鞋包", "total": 104, "healthy": 37, "watch": 53, "risk": 14, "avg_health": 71.8}, {"industry": "3C电子", "total": 78, "healthy": 33, "watch": 35, "risk": 10, "avg_health": 72.8}, {"industry": "家居园艺", "total": 55, "healthy": 20, "watch": 25, "risk": 10, "avg_health": 69.2}, {"industry": "户外运动", "total": 46, "healthy": 20, "watch": 18, "risk": 8, "avg_health": 70.7}, {"industry": "美妆个护", "total": 43, "healthy": 12, "watch": 26, "risk": 5, "avg_health": 72.4}, {"industry": "工业品", "total": 23, "healthy": 11, "watch": 8, "risk": 4, "avg_health": 70.8}, {"industry": "母婴玩具", "total": 34, "healthy": 11, "watch": 20, "risk": 3, "avg_health": 72.0}, {"industry": "汽摩配件", "total": 30, "healthy": 11, "watch": 17, "risk": 2, "avg_health": 75.8}];
+echarts.init(document.getElementById('c_ind')).setOption({
+ tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},legend:{top:0},
+ grid:{left:70,right:20,top:34,bottom:20},
+ xAxis:{type:'value'},yAxis:{type:'category',data:ind.map(d=>d.industry)},
+ series:[
+  {name:'健康',type:'bar',stack:'t',data:ind.map(d=>d.healthy),itemStyle:{color:'#43a047'}},
+  {name:'关注',type:'bar',stack:'t',data:ind.map(d=>d.watch),itemStyle:{color:'#fb8c00'}},
+  {name:'高风险',type:'bar',stack:'t',data:ind.map(d=>d.risk),itemStyle:{color:'#e53935'}}]
+});
+const caseData = {"C0007": [{"month": "2024-09", "logins": 102, "tickets": 0, "resolve": 0.0, "csat": null, "active_modules": 8, "util": 0.769, "health": 79.2, "tier": "关注", "in_service": true}, {"month": "2024-10", "logins": 102, "tickets": 0, "resolve": 0.0, "csat": null, "active_modules": 8, "util": 0.769, "health": 79.2, "tier": "关注", "in_service": true}, {"month": "2024-11", "logins": 112, "tickets": 3, "resolve": 8.2, "csat": 4.2, "active_modules": 8, "util": 0.846, "health": 81.4, "tier": "健康", "in_service": true}, {"month": "2024-12", "logins": 102, "tickets": 3, "resolve": 12.8, "csat": 4.2, "active_modules": 8, "util": 0.769, "health": 80.3, "tier": "健康", "in_service": true}, {"month": "2025-01", "logins": 102, "tickets": 1, "resolve": 13.4, "csat": 4.3, "active_modules": 8, "util": 0.769, "health": 79.5, "tier": "关注", "in_service": true}, {"month": "2025-02", "logins": 31, "tickets": 2, "resolve": 15.3, "csat": 4.1, "active_modules": 5, "util": 0.385, "health": 55.1, "tier": "高风险", "in_service": true}, {"month": "2025-03", "logins": 20, "tickets": 4, "resolve": 12.7, "csat": 3.6, "active_modules": 4, "util": 0.308, "health": 42.1, "tier": "高风险", "in_service": true}, {"month": "2025-04", "logins": 31, "tickets": 2, "resolve": 11.9, "csat": 3.3, "active_modules": 4, "util": 0.385, "health": 39.1, "tier": "高风险", "in_service": true}, {"month": "2025-05", "logins": 71, "tickets": 0, "resolve": 11.0, "csat": 3.1, "active_modules": 8, "util": 0.538, "health": 56.1, "tier": "高风险", "in_service": true}, {"month": "2025-06", "logins": 92, "tickets": 0, "resolve": 12.4, "csat": 3.4, "active_modules": 7, "util": 0.692, "health": 76.4, "tier": "关注", "in_service": true}, {"month": "2025-07", "logins": 102, "tickets": 0, "resolve": 0.0, "csat": null, "active_modules": 7, "util": 0.769, "health": 79.9, "tier": "关注", "in_service": true}, {"month": "2025-08", "logins": 112, "tickets": 1, "resolve": 10.4, "csat": 4.2, "active_modules": 8, "util": 0.846, "health": 83.0, "tier": "健康", "in_service": true}], "C0023": [{"month": "2024-09", "logins": 339, "tickets": 3, "resolve": 9.8, "csat": null, "active_modules": 8, "util": 0.833, "health": 80.1, "tier": "健康", "in_service": true}, {"month": "2024-10", "logins": 339, "tickets": 12, "resolve": 8.9, "csat": 4.3, "active_modules": 8, "util": 0.833, "health": 80.7, "tier": "健康", "in_service": true}, {"month": "2024-11", "logins": 328, "tickets": 8, "resolve": 7.8, "csat": 4.2, "active_modules": 8, "util": 0.806, "health": 80.3, "tier": "健康", "in_service": true}, {"month": "2024-12", "logins": 250, "tickets": 26, "resolve": 13.8, "csat": 4.2, "active_modules": 8, "util": 0.722, "health": 66.7, "tier": "关注", "in_service": true}, {"month": "2025-01", "logins": 212, "tickets": 29, "resolve": 15.7, "csat": 3.9, "active_modules": 8, "util": 0.611, "health": 61.3, "tier": "关注", "in_service": true}, {"month": "2025-02", "logins": 192, "tickets": 17, "resolve": 28.4, "csat": 3.1, "active_modules": 8, "util": 0.556, "health": 51.4, "tier": "高风险", "in_service": true}, {"month": "2025-03", "logins": 214, "tickets": 11, "resolve": 21.6, "csat": 3.1, "active_modules": 8, "util": 0.583, "health": 52.9, "tier": "高风险", "in_service": true}, {"month": "2025-04", "logins": 236, "tickets": 6, "resolve": 16.7, "csat": 3.0, "active_modules": 8, "util": 0.611, "health": 57.6, "tier": "高风险", "in_service": true}, {"month": "2025-05", "logins": 260, "tickets": 5, "resolve": 9.0, "csat": 4.1, "active_modules": 8, "util": 0.639, "health": 68.2, "tier": "关注", "in_service": true}, {"month": "2025-06", "logins": 272, "tickets": 2, "resolve": 8.2, "csat": 4.0, "active_modules": 8, "util": 0.667, "health": 69.3, "tier": "关注", "in_service": true}, {"month": "2025-07", "logins": 283, "tickets": 7, "resolve": 7.3, "csat": 4.1, "active_modules": 8, "util": 0.694, "health": 70.2, "tier": "关注", "in_service": true}, {"month": "2025-08", "logins": 283, "tickets": 2, "resolve": 9.2, "csat": 4.1, "active_modules": 8, "util": 0.694, "health": 70.2, "tier": "关注", "in_service": true}], "C0150": [{"month": "2024-09", "logins": 488, "tickets": 12, "resolve": 12.5, "csat": 4.4, "active_modules": 8, "util": 0.84, "health": 71.5, "tier": "关注", "in_service": true}, {"month": "2024-10", "logins": 453, "tickets": 5, "resolve": 10.4, "csat": 4.3, "active_modules": 8, "util": 0.78, "health": 69.7, "tier": "关注", "in_service": true}, {"month": "2024-11", "logins": 465, "tickets": 7, "resolve": 10.6, "csat": 4.3, "active_modules": 8, "util": 0.8, "health": 70.2, "tier": "关注", "in_service": true}, {"month": "2024-12", "logins": 453, "tickets": 8, "resolve": 10.4, "csat": 4.3, "active_modules": 8, "util": 0.78, "health": 70.4, "tier": "关注", "in_service": true}, {"month": "2025-01", "logins": 476, "tickets": 6, "resolve": 9.9, "csat": 4.3, "active_modules": 8, "util": 0.82, "health": 71.2, "tier": "关注", "in_service": true}, {"month": "2025-02", "logins": 453, "tickets": 6, "resolve": 12.2, "csat": 4.2, "active_modules": 8, "util": 0.78, "health": 70.1, "tier": "关注", "in_service": true}, {"month": "2025-03", "logins": 476, "tickets": 11, "resolve": 10.5, "csat": 4.2, "active_modules": 8, "util": 0.82, "health": 71.7, "tier": "关注", "in_service": true}, {"month": "2025-04", "logins": 476, "tickets": 6, "resolve": 14.3, "csat": 4.4, "active_modules": 8, "util": 0.82, "health": 71.6, "tier": "关注", "in_service": true}, {"month": "2025-05", "logins": 453, "tickets": 14, "resolve": 11.2, "csat": 4.4, "active_modules": 8, "util": 0.78, "health": 71.3, "tier": "关注", "in_service": true}, {"month": "2025-06", "logins": 70, "tickets": 22, "resolve": 16.3, "csat": 4.0, "active_modules": 4, "util": 0.3, "health": 40.1, "tier": "高风险", "in_service": true}, {"month": "2025-07", "logins": 10, "tickets": 13, "resolve": 19.1, "csat": 3.6, "active_modules": 2, "util": 0.12, "health": 20.9, "tier": "高风险", "in_service": true}, {"month": "2025-08", "logins": 1, "tickets": 8, "resolve": 23.0, "csat": 3.0, "active_modules": 1, "util": 0.02, "health": 12.8, "tier": "高风险", "in_service": true}]};
+const eventPt = {C0007:['2025-03',42.1],C0023:['2025-01',61.3],C0150:['2025-07',20.9]};
+Object.keys(caseData).forEach(cid=>{
+ const d=caseData[cid];
+ echarts.init(document.getElementById('chart_case_'+cid)).setOption({
+  tooltip:{trigger:'axis'},grid:{left:38,right:14,top:18,bottom:24},
+  xAxis:{type:'category',data:d.map(r=>r.month),axisLabel:{fontSize:10,interval:1}},
+  yAxis:{type:'value',min:0,max:100,axisLabel:{fontSize:10}},
+  series:[{type:'line',smooth:true,showSymbol:false,data:d.map(r=>r.health),
+   lineStyle:{width:2.5,color:'#5c6bc0'},areaStyle:{color:'rgba(92,107,192,.10)'},
+   markLine:{silent:true,symbol:'none',data:[{yAxis:60,lineStyle:{color:'#e53935',type:'dashed'}}]},
+   markPoint:{symbolSize:46,data:[{coord:eventPt[cid],itemStyle:{color:'#e53935'},
+     label:{formatter:'预警',fontSize:10,color:'#fff'}}]}}]
+ });
+});
+window.addEventListener('resize',()=>document.querySelectorAll('div[id^=c_],[id^=chart_case]').forEach(el=>{
+ const ins=echarts.getInstanceByDom(el); if(ins)ins.resize();}));
+</script></body></html>

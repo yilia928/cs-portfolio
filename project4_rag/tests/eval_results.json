@@ -1,0 +1,197 @@
+{
+  "n_questions": 100,
+  "n_chunks_std": 202,
+  "n_chunks_small": 419,
+  "selected_retrieval": {
+    "chunk_variant": "std-200-500+扩展(选定)",
+    "top_k": 5,
+    "word_weight": 0.6,
+    "expansion": 1,
+    "threshold": 0.11,
+    "recall": 0.97,
+    "mrr": 0.8938,
+    "module_precision": 0.558,
+    "handoff_rate": 0.05
+  },
+  "ablation_expand_off": {
+    "chunk_variant": "std-200-500",
+    "top_k": 5,
+    "word_weight": 0.6,
+    "expansion": 0,
+    "threshold": 0.11,
+    "recall": 0.97,
+    "mrr": 0.8725,
+    "module_precision": 0.538,
+    "handoff_rate": 0.06
+  },
+  "ablation_expand_on": {
+    "chunk_variant": "std-200-500+扩展(选定)",
+    "top_k": 5,
+    "word_weight": 0.6,
+    "expansion": 1,
+    "threshold": 0.11,
+    "recall": 0.97,
+    "mrr": 0.8938,
+    "module_precision": 0.558,
+    "handoff_rate": 0.05
+  },
+  "all_configs": [
+    {
+      "chunk_variant": "std-200-500+扩展(选定)",
+      "top_k": 5,
+      "word_weight": 0.6,
+      "expansion": 1,
+      "threshold": 0.11,
+      "recall": 0.97,
+      "mrr": 0.8938,
+      "module_precision": 0.558,
+      "handoff_rate": 0.05
+    },
+    {
+      "chunk_variant": "std-200-500",
+      "top_k": 5,
+      "word_weight": 0.7,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.97,
+      "mrr": 0.8731,
+      "module_precision": 0.542,
+      "handoff_rate": 0.05
+    },
+    {
+      "chunk_variant": "std-200-500",
+      "top_k": 5,
+      "word_weight": 0.6,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.97,
+      "mrr": 0.8725,
+      "module_precision": 0.538,
+      "handoff_rate": 0.06
+    },
+    {
+      "chunk_variant": "std-200-500",
+      "top_k": 5,
+      "word_weight": 0.5,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.97,
+      "mrr": 0.8708,
+      "module_precision": 0.548,
+      "handoff_rate": 0.07
+    },
+    {
+      "chunk_variant": "small-240",
+      "top_k": 5,
+      "word_weight": 0.5,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.95,
+      "mrr": 0.8585,
+      "module_precision": 0.592,
+      "handoff_rate": 0.05
+    },
+    {
+      "chunk_variant": "std-200-500",
+      "top_k": 3,
+      "word_weight": 0.6,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.94,
+      "mrr": 0.8725,
+      "module_precision": 0.62,
+      "handoff_rate": 0.06
+    },
+    {
+      "chunk_variant": "std-200-500",
+      "top_k": 3,
+      "word_weight": 0.5,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.94,
+      "mrr": 0.8708,
+      "module_precision": 0.6233,
+      "handoff_rate": 0.07
+    },
+    {
+      "chunk_variant": "small-240",
+      "top_k": 5,
+      "word_weight": 0.6,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.94,
+      "mrr": 0.8621,
+      "module_precision": 0.584,
+      "handoff_rate": 0.05
+    },
+    {
+      "chunk_variant": "small-240",
+      "top_k": 5,
+      "word_weight": 0.7,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.93,
+      "mrr": 0.8528,
+      "module_precision": 0.582,
+      "handoff_rate": 0.05
+    },
+    {
+      "chunk_variant": "std-200-500",
+      "top_k": 3,
+      "word_weight": 0.7,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.92,
+      "mrr": 0.8731,
+      "module_precision": 0.62,
+      "handoff_rate": 0.05
+    },
+    {
+      "chunk_variant": "small-240",
+      "top_k": 3,
+      "word_weight": 0.6,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.89,
+      "mrr": 0.8621,
+      "module_precision": 0.6567,
+      "handoff_rate": 0.05
+    },
+    {
+      "chunk_variant": "small-240",
+      "top_k": 3,
+      "word_weight": 0.5,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.89,
+      "mrr": 0.8585,
+      "module_precision": 0.6567,
+      "handoff_rate": 0.05
+    },
+    {
+      "chunk_variant": "small-240",
+      "top_k": 3,
+      "word_weight": 0.7,
+      "expansion": 0,
+      "threshold": 0.11,
+      "recall": 0.89,
+      "mrr": 0.8528,
+      "module_precision": 0.66,
+      "handoff_rate": 0.05
+    }
+  ],
+  "answer_quality_on": {
+    "curated_n": 40,
+    "answer_keyword_coverage": 0.859,
+    "answer_rate": 0.975,
+    "no_answer_handoff": 0,
+    "wrong_handoff": 1
+  },
+  "answer_quality_off": {
+    "curated_n": 40,
+    "answer_keyword_coverage": 0.8289,
+    "answer_rate": 0.95,
+    "no_answer_handoff": 0,
+    "wrong_handoff": 2
+  }
+}

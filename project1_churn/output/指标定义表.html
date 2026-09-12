@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>指标定义表</title><style>
+:root{--brand:#2e5bff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--bg:#f6f8fc}
+*{box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC","Source Han Sans SC",sans-serif;color:var(--ink);
+ line-height:1.75;margin:0;background:var(--bg);font-size:14px}
+.page{max-width:880px;margin:0 auto;padding:48px 56px;background:#fff;min-height:100vh}
+h1{font-size:27px;color:var(--brand);border-bottom:3px solid var(--brand);padding-bottom:14px;margin:0 0 6px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:11px;border-left:5px solid var(--brand);color:#1e3a8a}
+h3{font-size:16px;margin:22px 0 8px;color:#374151}
+p{margin:9px 0}
+blockquote{margin:14px 0;padding:10px 16px;background:#eef3ff;border-left:4px solid var(--brand);
+ color:#374151;font-size:13px;border-radius:0 6px 6px 0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:12.8px}
+th{background:var(--brand);color:#fff;padding:8px 10px;text-align:left;font-weight:600}
+td{border:1px solid var(--line);padding:7px 10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:12.5px;color:#b5179e}
+pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.6}
+pre code{background:none;color:inherit;padding:0}
+ul,ol{padding-left:24px} li{margin:5px 0}
+hr{border:none;border-top:1px dashed #cbd5e1;margin:26px 0}
+strong{color:#111827}
+a{color:var(--brand)}
+@page{size:A4;margin:16mm 14mm}
+@media print{
+ body{background:#fff;font-size:12px}
+ .page{max-width:none;padding:0}
+ h2{page-break-after:avoid} table,blockquote,pre{page-break-inside:avoid}
+ h2,h3{page-break-after:avoid}
+}
+</style></head>
+<body><div class="page"><h1>客户成功指标定义表（Metric Dictionary）</h1>
+<blockquote>
+<p>产品：跨境电商 SaaS（ERP） ｜ 客户规模：500 家 ｜ 数据窗口：2024-09 ~ 2025-08 ｜ 分析基准日：2025-09-01<br />
+数据来源：客户主数据表 <code>customers.csv</code>（500 行）+ 月度行为表 <code>monthly_usage.csv</code>（6,000 行），由 pandas 按固定随机种子生成，可复现。<br />
+所有指标按月度批次 T+1 更新；金额单位为人民币元年合同额（ARR）。</p>
+</blockquote>
+<h2>一、北极星与一级指标</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>计算公式</th>
+<th>数据口径与说明</th>
+<th>权重 / 目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>续约率 Renewal Rate</strong></td>
+<td>已续约客户数 ÷ 已到期客户数</td>
+<td>按合同到期月划分队列（cohort），分析日之前到期的客户计入分母；"待续约"（未到期）不计入。本期：到期 380 家、续约 293 家，<strong>续约率 77.1%</strong></td>
+<td>目标 ≥ 85%</td>
+</tr>
+<tr>
+<td><strong>金额续约率 GRR</strong></td>
+<td>续约客户合同额 ÷ 到期客户合同额</td>
+<td>本体系将金额口径作为续约率的补充监控字段，防止"小客户续约、大客户流失"被掩盖</td>
+<td>目标 ≥ 90%</td>
+</tr>
+<tr>
+<td><strong>客户健康度 Health Score</strong></td>
+<td><strong>0.40×使用率 + 0.25×登录趋势 + 0.25×工单趋势 + 0.10×CSAT</strong></td>
+<td>0–100 分，每月每客户计算一次；只对"在服客户"（未流失）取群均值</td>
+<td>分层阈值见下</td>
+</tr>
+<tr>
+<td><strong>月活使用率 Seat Utilization</strong></td>
+<td>当月活跃账号数 active_accounts ÷ 购买席位数 seats</td>
+<td>客户群口径 = 在服客户的席位利用率加权均值；活跃定义为当月至少登录 1 次</td>
+<td>目标 ≥ 70%</td>
+</tr>
+<tr>
+<td><strong>CSAT</strong></td>
+<td>近 3 个月工单满意度均值（1–5 分）</td>
+<td>仅已关闭工单触发、约 85% 回收率；无工单/无回收月份按 <strong>80 分（中性）</strong> 处理，避免"不用系统=满意度高"的倒挂</td>
+<td>目标 ≥ 4.2</td>
+</tr>
+</tbody>
+</table>
+<h2>二、健康度分项打分规则（可现场口述版）</h2>
+<p><strong>一句话版本：健康度 = 用得深不深（40%）+ 来得勤不勤（25%）+ 疼不疼（25%）+ 满不满意（10%）。</strong></p>
+<table>
+<thead>
+<tr>
+<th>分项</th>
+<th>权重</th>
+<th>原始变量</th>
+<th>打分规则（分段线性映射）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>使用率得分</strong></td>
+<td>40%</td>
+<td>席位利用率、使用模块数</td>
+<td>= 0.6×席位利用率分 + 0.4×模块采用分。席位利用率 80% 即满分（预留 20% 管理账号/离职冗余）；全系统 12 个模块，用满 10 个即满分，1 个为起步分</td>
+</tr>
+<tr>
+<td><strong>登录趋势得分</strong></td>
+<td>25%</td>
+<td>近 3 月登录次数均值 ÷ 前 3 月均值</td>
+<td>比值 ≥1.10→100；1.00→90；0.70→55；0.50→30；0.30→10。<strong>前 3 月均值 &lt; 5 次时趋势不具统计意义，直接给中性偏上的 85 分</strong>，防止小客户被噪声误杀</td>
+</tr>
+<tr>
+<td><strong>工单趋势得分</strong></td>
+<td>25%</td>
+<td>近 3 月工单数 ÷ 前 3 月工单数，再乘解决时效系数</td>
+<td>工单量映射：下降→95~100；持平→85；+50%→60；翻倍→40；3 倍→25。时效系数：解决 ≤12h 不扣分，24h×0.9，48h×0.78，72h×0.6（"慢"比"问"更危险）</td>
+</tr>
+<tr>
+<td><strong>CSAT 得分</strong></td>
+<td>10%</td>
+<td>近 3 月 CSAT 均值</td>
+<td>CSAT/5×100；无回收按 80 中性分</td>
+</tr>
+</tbody>
+</table>
+<h2>三、健康度分层</h2>
+<table>
+<thead>
+<tr>
+<th>分层</th>
+<th>阈值</th>
+<th>经营含义</th>
+<th>当前在服客户分布（413 家）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>健康</td>
+<td>≥ 80</td>
+<td>可经营增购、案例共建</td>
+<td>155 家（37.5%）</td>
+</tr>
+<tr>
+<td>关注</td>
+<td>60 – 79</td>
+<td>主动辅导，防止滑入风险区</td>
+<td>202 家（48.9%）</td>
+</tr>
+<tr>
+<td>高风险</td>
+<td>&lt; 60</td>
+<td>立即启动挽救 SOP</td>
+<td>56 家（13.6%）</td>
+</tr>
+</tbody>
+</table>
+<h2>四、口径约定与防作弊说明（面试官追问点）</h2>
+<ol>
+<li><strong>在服口径</strong>：月度群均值只统计当月仍在合同期内的客户；未续约客户到期次月起访问回收、数据归零，不计入均值，避免把流失机械计入大盘下滑。</li>
+<li><strong>为什么不用单一登录指标</strong>：B 端客户存在"旺季外包多、淡季老板自己上"的季节性，单点登录会误报；因此采用"3 月对 3 月"的趋势比，并叠加使用率绝对值。</li>
+<li><strong>为什么 CSAT 只占 10%</strong>：CSAT 回收率约 85% 且只在有工单时产生，沉默流失客户根本不打分，权重过高会让"安静离开"的客户显得健康；它用于<strong>修正</strong>而非主导。</li>
+<li><strong>为什么趋势用比值而不是差值</strong>：500 家客户体量从 5 席位到 160 席位不等，比值具备跨规模可比性。</li>
+<li><strong>无工单惩罚吗</strong>：不惩罚。无工单在使用率正常时是好事（产品用得顺）；但工单"暴增 + 解决慢 + 评分差"三者同时出现才是危险信号，因此规则层要求组合条件而非单条件报警。</li>
+<li><strong>数据可复现</strong>：生成脚本 <code>01_generate_data.py</code> 固定随机种子 42；指标与评分实现见 <code>02_metrics_scoring.py</code>，权重与映射表与本文档一一对应。</li>
+</ol>
+<h2>五、指标与客户旅程的对应</h2>
+<table>
+<thead>
+<tr>
+<th>旅程阶段</th>
+<th>主指标</th>
+<th>辅助信号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Onboarding 0–30 天</td>
+<td>首单跑通时长、席位利用率</td>
+<td>使用模块数、激活率</td>
+</tr>
+<tr>
+<td>常规运营 31–60 天</td>
+<td>健康度、月活使用率</td>
+<td>登录趋势、工单解决时长</td>
+</tr>
+<tr>
+<td>续约准备 61–90 天</td>
+<td>续约率、金额续约率</td>
+<td>续约意向、健康度分层、风险 ARR</td>
+</tr>
+</tbody>
+</table></div></body></html>

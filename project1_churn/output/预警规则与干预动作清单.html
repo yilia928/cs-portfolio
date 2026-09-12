@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>预警规则与干预动作清单</title><style>
+:root{--brand:#2e5bff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--bg:#f6f8fc}
+*{box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC","Source Han Sans SC",sans-serif;color:var(--ink);
+ line-height:1.75;margin:0;background:var(--bg);font-size:14px}
+.page{max-width:880px;margin:0 auto;padding:48px 56px;background:#fff;min-height:100vh}
+h1{font-size:27px;color:var(--brand);border-bottom:3px solid var(--brand);padding-bottom:14px;margin:0 0 6px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:11px;border-left:5px solid var(--brand);color:#1e3a8a}
+h3{font-size:16px;margin:22px 0 8px;color:#374151}
+p{margin:9px 0}
+blockquote{margin:14px 0;padding:10px 16px;background:#eef3ff;border-left:4px solid var(--brand);
+ color:#374151;font-size:13px;border-radius:0 6px 6px 0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:12.8px}
+th{background:var(--brand);color:#fff;padding:8px 10px;text-align:left;font-weight:600}
+td{border:1px solid var(--line);padding:7px 10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:12.5px;color:#b5179e}
+pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.6}
+pre code{background:none;color:inherit;padding:0}
+ul,ol{padding-left:24px} li{margin:5px 0}
+hr{border:none;border-top:1px dashed #cbd5e1;margin:26px 0}
+strong{color:#111827}
+a{color:var(--brand)}
+@page{size:A4;margin:16mm 14mm}
+@media print{
+ body{background:#fff;font-size:12px}
+ .page{max-width:none;padding:0}
+ h2{page-break-after:avoid} table,blockquote,pre{page-break-inside:avoid}
+ h2,h3{page-break-after:avoid}
+}
+</style></head>
+<body><div class="page"><h1>流失预警规则与客户干预动作清单（Early-Warning Playbook）</h1>
+<blockquote>
+<p>评估月份：2025-08 ｜ 当月命中预警客户 <strong>63 家</strong>：红色 19 家、橙色 22 家、黄色 22 家 ｜ 红/橙客户对应风险 ARR <strong>¥347,760</strong><br />
+设计原则：<strong>每条规则都能用一句业务语言解释，每条预警都必须带触发证据（具体数字），每个分层都有规定动作和时限。</strong></p>
+</blockquote>
+<h2>一、预警规则总表（可解释规则引擎）</h2>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>名称</th>
+<th>触发条件（全部满足）</th>
+<th>严重度</th>
+<th>业务解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R1</strong></td>
+<td>登录骤降</td>
+<td>连续 2 个月登录次数环比下降 &gt;30%（且基期 ≥20 次）<strong>且</strong> 当月健康度 &lt;60</td>
+<td>🔴 高</td>
+<td>"客户连门都不进了"——使用崩塌的最强先行信号，通常领先流失 1–3 个月</td>
+</tr>
+<tr>
+<td><strong>R2</strong></td>
+<td>工单风暴</td>
+<td>近 2 月工单数较前 2 月增长 ≥50% <strong>且</strong> 平均解决时长 &gt;24h <strong>且</strong> CSAT &lt;3.5（近 2 月口径，三项同时成立）</td>
+<td>🔴 高</td>
+<td>"客户在喊疼，而我们没接住"——单纯工单多不是问题（旺季正常），量多+解决慢+差评才是体验事故</td>
+</tr>
+<tr>
+<td><strong>R3</strong></td>
+<td>活跃萎缩</td>
+<td>连续 3 个月席位利用率 &lt;50%，或连续 3 个月使用模块数 ≤2</td>
+<td>🟡 低</td>
+<td>"买了不用/只用皮毛"——温水煮青蛙型流失，领先期可达 3–6 个月</td>
+</tr>
+<tr>
+<td><strong>R4</strong></td>
+<td>续约窗口</td>
+<td>自评估当月起 60 天内合同到期 <strong>且</strong> 健康度 &lt;70</td>
+<td>🟠 中</td>
+<td>"续约考试临近但成绩不及格"——到期驱动的流程性预警，保证销售/CSM 提前介入</td>
+</tr>
+<tr>
+<td><strong>R5</strong>（拟新增）</td>
+<td>关注层停滞</td>
+<td>连续 ≥6 个月健康度处于 60–79 且使用模块数零增长</td>
+<td>🟡 低</td>
+<td>源自案例 C0150 复盘：长期"不温不火"是现有规则盲区（见《案例复盘》案例③）</td>
+</tr>
+</tbody>
+</table>
+<p>规则去重与排序：同一客户可命中多条；<strong>严重度按 红 &gt; 橙 &gt; 黄取最高</strong>，同严重度按健康度升序进入 TOP 榜；全部命中证据保留在 <code>intervention_list.csv</code> 的"全部证据"字段。</p>
+<h2>二、真实触发证据示例（取自本月预警名单）</h2>
+<ul>
+<li><strong>R1</strong>：<code>登录连续两月环比下降 70%/35%（102→31→20 次），健康度 42.1</code>（客户 C0007，2025-03）</li>
+<li><strong>R2</strong>：<code>近2月工单较前2月增长 175%（10.0→27.5 张/月），平均解决 28h，CSAT 3.3</code>（客户 C0023，2025-01）</li>
+<li><strong>R3</strong>：<code>连续3月席位利用率 31%~38%、使用模块 4~5 个</code>（客户 C0007，2025-04）</li>
+<li><strong>R1</strong>：<code>登录连续两月环比下降 85%/86%（453→70→10 次），健康度 20.9</code>（客户 C0150，2025-07）</li>
+</ul>
+<p>每条证据都同时回答三个问题：<strong>发生了什么（指标）、严重到什么程度（数字对比）、现在多危险（健康度）</strong>。</p>
+<h2>三、分层动作 SOP（规定动作 + 时限）</h2>
+<h3>🔴 高风险客户（健康度 &lt;60 或命中 R1/R2）—— 24 小时响应</h3>
+<table>
+<thead>
+<tr>
+<th>时限</th>
+<th>动作</th>
+<th>责任人</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24h 内</td>
+<td>CSM 电话/视频诊断，定位根因（人走了？换渠道了？竞品？事故？），输出 1 页《流失根因纪要》</td>
+<td>客户经理</td>
+</tr>
+<tr>
+<td>48h 内</td>
+<td>客户成功总监 + 销售 VP 对客户高层回访（高管对高管），表达重视</td>
+<td>CS 总监 / 销售 VP</td>
+</tr>
+<tr>
+<td>5 个工作日</td>
+<td>输出定制挽救方案：赠送 1 个月服务期 / 专属培训包 / 应急 SLA，明确挽回目标值（如健康度 30 天内回到 65）</td>
+<td>CSM + 解决方案</td>
+</tr>
+<tr>
+<td>每周</td>
+<td>数据复盘跟进直至健康度连续 2 周 ≥70，再降级为双周</td>
+<td>CSM</td>
+</tr>
+</tbody>
+</table>
+<p><strong>按根因加挂动作：</strong><br />
+- 登录骤降（R1）：核查客户侧关键人变动 → 重新指定对接人 → 30 天激活任务（每周 2 个核心功能）；<br />
+- 工单风暴（R2）：技术支持专家 48h 内介入 → 开通 4 小时应急响应通道 → 针对报错场景 1v1 培训 → 2 周内复盘解决率与 CSAT。</p>
+<h3>🟠 续约风险客户（R4，60 天内到期且健康度 &lt;70）—— 续约前 60 天启动</h3>
+<ol>
+<li>立即生成《客户价值回顾报告》（发货单量、节省工时、对账准确率等价值数据）并预约续约沟通；</li>
+<li>销售 + CSM 联合拜访，提前摸排预算、决策人变动、竞品接触情况；</li>
+<li>高风险客户匹配增值方案或老客续约权益（年付优惠、加购打包），把"降价谈判"转为"价值谈判"；</li>
+<li>使用《异议处理 FAQ》应对价格、竞品、功能不足三类典型异议（见项目②模板包）。</li>
+</ol>
+<h3>🟡 关注客户（R3 活跃萎缩 / R5 关注层停滞）—— 14 天内动作</h3>
+<ol>
+<li>下发 30 天激活任务清单（每周 2 个核心功能，带截图教程与完成打卡）；</li>
+<li>邀请报名最近一期直播培训，布置课后实操任务；</li>
+<li>双周一次使用数据巡检 + 15 分钟电话辅导；</li>
+<li>识别并培养客户内部 champion（活跃账号中的高频用户），发展其为内部推动人。</li>
+</ol>
+<h3>🟢 健康客户（健康度 ≥80）—— 经营增长，而非打扰</h3>
+<ul>
+<li>每季度一次价值回顾（QBR），同步使用最佳实践；</li>
+<li>增购机会识别：席位利用率持续 &gt;80% 推席位扩容；模块使用深推库存/对账/广告等高价值模块；</li>
+<li>邀请作为客户案例/分享嘉宾，给予标杆客户权益。</li>
+</ul>
+<h2>四、升级机制与闭环管理</h2>
+<pre><code>系统预警(T+1) → CSM 24h 认领 → 根因诊断 → 动作执行 → 周度健康度复测 → 关闭/升级
+     ↓ 48h 未认领                 ↓ 2 周健康度不升
+   自动升级至 CS 总监          升级为红色，VP 介入
+</code></pre>
+<ul>
+<li>预警工单必须回填 5 个字段：<strong>根因分类、已执行动作、客户反馈、下次跟进日、目标健康度</strong>；</li>
+<li>关闭条件：连续 2 周健康度 ≥70（红）/ ≥75（橙）并稳定一个月；</li>
+<li>每月误报复盘：统计"预警但续约/健康回升"比例，校准阈值（如 R1 的 30%、R2 的 50%）；漏报同样复盘并反向补规则（R5 即由漏报案例 C0150 催生）。</li>
+</ul>
+<h2>五、本月干预名单结构（交付文件）</h2>
+<p>完整名单见 <code>output/intervention_list.csv</code> 与 Excel《预警名单》页（63 行），字段：</p>
+<p><code>排名 | 客户ID | 行业 | 版本 | 客户经理 | 健康度 | 分层 | 主规则 | 严重度 | 触发证据 | 全部证据 | 建议干预动作 | 续约状态 | 合同到期 | 年合同额</code></p>
+<ul>
+<li>默认排序：严重度（红→橙→黄）→ 健康度升序；</li>
+<li>资源有限时的取舍原则：<strong>先救高金额高风险（看年合同额），再批量激活黄色名单（低成本自动化任务）</strong>。</li>
+</ul></div></body></html>
